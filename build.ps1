@@ -10,7 +10,11 @@ Param(
 
     [Parameter()]
     [Switch]
-    $PublishPackage
+    $PublishPackage,
+
+    [Parameter()]
+    [Switch]
+    $SuppressChocoOutput
 )
 
 begin {
@@ -36,7 +40,11 @@ begin {
         Param(
             [Parameter()]
             [String]
-            $PackageId = 'dwgtrueview'
+            $PackageId = 'dwgtrueview',
+
+            [Parameter()]
+            [Switch]
+            $SuppressChocoOutput
         )
     
         process {
@@ -59,7 +67,8 @@ begin {
             $content = Get-Content $installScript -Raw
             $null = $content -match $matcher
             
-            return $matches.url
+            [string]$url = $matches.url
+            return $url
             
         }
     
@@ -126,7 +135,8 @@ begin {
         }
         process {
             $outputDirectory = $tempPath
-            $file = Download-DWGTrueView -DownloadUrl (Get-DWGTrueviewDownloadUrl)
+            $url = Get-DWGTrueviewDownloadUrl -SuppressChocoOutput
+            $file = Get-DWGTrueView -DownloadUrl $url
     
             Write-Verbose -Message "Getting checksum for DWG Trueview installer"
             $checksum = (Get-FileHash $file).Hash
@@ -171,7 +181,7 @@ begin {
 process {
     switch($true){
         $GeneratePackage {
-            New-DwgTrueviewPackage
+            New-DwgTrueviewPackage -SuppressChocoOutput
         }
 
         $CopyTemplate {
@@ -191,6 +201,15 @@ process {
             Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Force -Recurse -Verbose
         }
         
-        $PublishPackage {}
+        $PublishPackage {
+            $packageFolder = Join-Path $pwd -ChildPath 'nuget'
+            $nuspecFile = Get-ChildItem $packageFolder -Recurse -Filter *.nuspec | Select-Object -ExpandProperty Fullname
+            $chocoArgs = @('push',$nuspecFile,"--source='$env:REPOSITORYURL'","--api-key='$env:NUGETAPIKEY'")
+            & choco @chocoArgs
+
+            if($LASTEXITCODE -eq 0){
+                Remove-Item $packageFolder -Recurse -Force
+            }
+        }
     }
 }
