@@ -176,7 +176,7 @@ process {
             }
 
             $trueViewTemplate = Join-Path $PSScriptRoot -ChildPath 'templates\trueview'
-            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Recurse
+            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Recurse -Force
         }
         
         $PublishPackage {}

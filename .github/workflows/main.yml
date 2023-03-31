@@ -1,0 +1,15 @@
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      NugetApiKey: ${{ secrets.NugetApiKey }}
+      
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Module
+        run: .\build.ps1 -CopyTemplate
+        shell: pwsh
