@@ -171,7 +171,7 @@ process {
         $CopyTemplate {
 
             Write-host "Working from $PWD"
-            $chocolateyTemplateFolder = Join-Path $env:ChocolateyInstall -ChildPath 'templates'
+            $chocolateyTemplateFolder = Join-Path $env:ChocolateyInstall -ChildPath 'templates\'
 
             if(-not (Test-Path $chocolateyTemplateFolder)){
                 $null = New-Item $chocolateyTemplateFolder
