@@ -16,7 +16,7 @@ jobs:
         shell: powershell
 
       - name: Build DWG Trueview Package
-        run: .\build.ps1 -GeneratePackage
+        run: .\build.ps1 -GeneratePackage -SuppressChocoOutput -Verbose
         shell: powershell
 
       - name: Publish DWG Trueview Package
