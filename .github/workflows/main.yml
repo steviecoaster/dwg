@@ -12,4 +12,4 @@ jobs:
       
       - name: Build Module
         run: .\build.ps1 -CopyTemplate
-        shell: pwsh
+        shell: powershell
