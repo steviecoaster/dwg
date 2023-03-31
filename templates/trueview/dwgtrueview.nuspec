@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>dwgtrueview</id>
+    <version>[[Version]]</version>
+    <title>DWG TrueView</title>
+    <authors>Autodesk</authors>
+    <owners>Weigand Construction</owners>
+    <iconUrl>https://cdn.jsdelivr.net/gh/andreasmalta/choco_packages@master/dwgtrueview/icon.png</iconUrl>
+    <description>View DWG files or convert them to work with older versions of AutoCAD software.
+
+#### System requirements for DWG TrueView 2023
+Operating System: 64-bit Microsoft® Windows® 11 and Windows 10 version 1809 or above.
+    </description>
+    <summary>DWG TrueView</summary>
+    <releaseNotes>https://cdn.jsdelivr.net/gh/andreasmalta/choco_packages@master/dwgtrueview/releasenotes.txt</releaseNotes>
+    <tags>trueview autodesk autocad dwg dwf dxf viewer</tags>
+  </metadata>
+</package>
