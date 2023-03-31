@@ -13,3 +13,7 @@ jobs:
       - name: Build Module
         run: .\build.ps1 -CopyTemplate
         shell: powershell
+
+      - name: Build DWG Trueview Package
+        run: .\build.ps1 -GeneratePackage
+        shell: powershell

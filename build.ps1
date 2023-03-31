@@ -108,6 +108,10 @@ begin {
             [Parameter()]
             [string]
             $Template = 'trueview',
+
+            [Parameter()]
+            [String]
+            $outputDirectory = (Join-path $PWD -ChildPath 'nuget'),
     
             [Parameter()]
             [Switch]
@@ -115,7 +119,7 @@ begin {
         )
     
         begin {
-            $tempPath = $env:TEMP | Join-Path -ChildPath "$((New-GUId).Guid)"
+            $tempPath = $outputDirectory
             if (-not (Test-Path $tempPath)) {
                 $null = New-Item $tempPath -ItemType Directory
             }
@@ -166,7 +170,9 @@ begin {
 
 process {
     switch($true){
-        $GeneratePackage {}
+        $GeneratePackage {
+            New-DwgTrueviewPackage
+        }
 
         $CopyTemplate {
 
@@ -182,7 +188,7 @@ process {
             Write-Host "Got template: $trueViewTemplate"
             Write-Host "Destination: $chocolateyTemplateFolder"
 
-            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Force -Recurse
+            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Force -Recurse -Verbose
         }
         
         $PublishPackage {}
