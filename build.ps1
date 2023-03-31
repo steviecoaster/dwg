@@ -174,7 +174,7 @@ process {
             $chocolateyTemplateFolder = Join-Path $env:ChocolateyInstall -ChildPath 'templates\'
 
             if(-not (Test-Path $chocolateyTemplateFolder)){
-                $null = New-Item $chocolateyTemplateFolder
+                $null = New-Item $chocolateyTemplateFolder -ItemType Directory
             }
 
             $trueViewTemplate = Join-Path $PWD -ChildPath 'templates\trueview\'
@@ -182,7 +182,7 @@ process {
             Write-Host "Got template: $trueViewTemplate"
             Write-Host "Destination: $chocolateyTemplateFolder"
 
-            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Force
+            Copy-Item $trueViewTemplate -Destination $chocolateyTemplateFolder -Force -Recurse
         }
         
         $PublishPackage {}
