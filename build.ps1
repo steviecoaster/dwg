@@ -49,7 +49,7 @@ begin {
     
         process {
             Write-Verbose -Message "Getting latest download url for DWG Trueview installer"
-            $tempPath = $env:TEMP | Join-Path -ChildPath "$((New-GUId).Guid)"
+            $tempPath = $pwd | Join-Path -ChildPath "$((New-GUId).Guid)"
     
             $chocoargs = @('download', $PackageId, '-s https://community.chocolatey.org/api/v2/', "--output-directory='$TempPath'")
     
@@ -86,7 +86,7 @@ begin {
         )
     
         process {
-            $env:TrueViewTempPath = $env:TEMP | Join-Path -ChildPath "$((New-GUId).Guid)"
+            $env:TrueViewTempPath = $pwd | Join-Path -ChildPath "$((New-GUId).Guid)"
     
             if (-not (Test-Path $env:TrueViewTempPath)) {
                 $null = New-Item $env:TrueViewTempPath -ItemType Directory

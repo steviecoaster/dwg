@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Build Module
+      - name: Create Template
         run: .\build.ps1 -CopyTemplate
         shell: powershell
 
