@@ -18,6 +18,8 @@ Param(
 )
 
 begin {
+
+    $chocoCommand = 'C:\ProgramData\chocolatey\bin\choco.exe'
     function Assert-PackageVersion {
         [CmdletBinding()]
         Param(
@@ -30,7 +32,7 @@ begin {
             $chocoArgs = @('search', $PackageId, '--source="https://community.chocolatey.org/api/v2/"', '-r')
             
             Write-Verbose -Message "Getting latest version information from Chocolatey Community Repository"
-            $version = & choco @chocoArgs | ConvertFrom-Csv -Delimiter '|' -Header Id, Version | Select-Object -ExpandProperty Version
+            $version = & $chocoCommand @chocoArgs | ConvertFrom-Csv -Delimiter '|' -Header Id, Version | Select-Object -ExpandProperty Version
             return $version
         }
     }
@@ -54,10 +56,10 @@ begin {
             $chocoargs = @('download', $PackageId, '-s https://community.chocolatey.org/api/v2/', "--output-directory='$TempPath'")
     
             if ($SuppressChocoOutput) {
-                & choco @chocoArgs > $null
+                & $chocoCommand @chocoArgs > $null
             }
             else {
-                & choco @chocoArgs
+                & $chocoCommand @chocoArgs
             }
     
             $toolsDir = Join-Path $tempPath -ChildPath "download\$PackageId\tools"
@@ -146,10 +148,10 @@ begin {
             
             
             if ($SuppressChocoOutput) {
-                & choco @chocoArgs > $null
+                & $chocoCommand @chocoArgs > $null
             }
             else {
-                & choco @chocoArgs
+                & $chocoCommand @chocoArgs
             }
     
             $toolsDir = Join-Path $outputDirectory -ChildPath "$PackageId\tools"
@@ -160,11 +162,11 @@ begin {
             $nuspecFile = Join-Path $outputDirectory -ChildPath "$PackageId\$Packageid.nuspec"
             $packArgs = @('pack', $nuspecFile, "--output-directory='$outputDirectory'")
             if ($SuppressChocoOutput) {
-                & choco @packArgs > $null
+                & $chocoCommand @packArgs > $null
     
             }
             else {
-                & choco @packArgs
+                & $chocoCommand @packArgs
             }
             
             Write-Host "Package available at the following location" -ForegroundColor Green
@@ -205,7 +207,7 @@ process {
             $packageFolder = Join-Path $pwd -ChildPath 'nuget'
             $nuspecFile = Get-ChildItem $packageFolder -Recurse -Filter *.nuspec | Select-Object -ExpandProperty Fullname
             $chocoArgs = @('push',$nuspecFile,"--source='$env:REPOSITORYURL'","--api-key='$env:NUGETAPIKEY'")
-            & choco @chocoArgs
+            & $chocoCommand @chocoArgs
 
             if($LASTEXITCODE -eq 0){
                 Remove-Item $packageFolder -Recurse -Force

@@ -2,7 +2,7 @@ on: push
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: self-hosted
     env:
       NugetApiKey: ${{ secrets.NugetApiKey }}
       RepositoryUrl: ${{ secrets.REPOSITORYURL}}
