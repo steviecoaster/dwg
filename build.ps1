@@ -205,8 +205,8 @@ process {
         
         $PublishPackage {
             $packageFolder = Join-Path $pwd -ChildPath 'nuget'
-            $nuspecFile = Get-ChildItem $packageFolder -Recurse -Filter *.nuspec | Select-Object -ExpandProperty Fullname
-            $chocoArgs = @('push',$nuspecFile,"--source='$env:REPOSITORYURL'","--api-key='$env:NUGETAPIKEY'")
+            $nupkgFile = Get-ChildItem $packageFolder -Recurse -Filter *.nupkg | Select-Object -ExpandProperty Fullname
+            $chocoArgs = @('push',$nupkgFile,"--source='$env:REPOSITORYURL'","--api-key='$env:NUGETAPIKEY'")
             & $chocoCommand @chocoArgs
 
             if($LASTEXITCODE -eq 0){
