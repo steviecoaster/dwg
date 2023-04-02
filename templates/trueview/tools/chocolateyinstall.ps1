@@ -37,4 +37,4 @@ $packageArgs  = @{
 }
 Install-ChocolateyInstallPackage @packageArgs
 
-Remove-Item $file
+Remove-Item $extractor
